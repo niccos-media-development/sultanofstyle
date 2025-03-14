@@ -1,0 +1,332 @@
+{%- assign color_scheme_hash = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background | md5 -%}
+
+  <div style="position: relative;" class="{{ section.id }} {% unless section.settings.remove_vertical_spacing %}section-spacing{% endunless %} color-scheme color-scheme--{{ section.settings.color_scheme.id }} color-scheme--bg-{{ color_scheme_hash }} {% if section.settings.separate_section_with_border %}bordered-section{% endif %}">
+    
+<div class="{% if section.settings.enable_container %}container container--{{ section.settings.content_width_container }}{% endif %}">
+  <div class="features_section">
+  <div class="features_block {% if section.settings.content_position_mob == 'end' %}mobile_order{% endif %} {% if section.settings.content_position == 'end' %}desktop_order{% endif %}">
+      {%- for block in section.blocks -%}             
+    <div class="feature">
+       {%- if block.settings.text != blank -%}
+        <h2>{{ block.settings.text }}</h2>
+       {%- endif -%}
+       {%- if block.settings.content != blank -%}
+         <div class="banner_content">
+                  {{- block.settings.content -}}
+            </div>
+      {%- endif -%}
+     </div>
+ 
+    {%- endfor -%}
+
+  </div>
+   <div class="prose text-left sm:text-start content_feature" id="{{ section.id }}" >
+     {%- if section.settings.subheading != blank -%}
+                <p class="h6 uni_subheading" {{ section.shopify_attributes }}>{{ section.settings.subheading }}</p>
+              {%- endif -%}
+              {%- if section.settings.text != blank -%}
+                <p class="banner_heading {{ section.settings.heading_tag }}" {{ section.shopify_attributes }}>{{ section.settings.text }}</p>
+              {%- endif -%}
+              {%- if section.settings.content != blank -%}
+                <div {{ section.shopify_attributes }} class="banner_content">
+                  {{- section.settings.content -}}
+                </div>
+              {%- endif -%}
+              {%- if section.settings.text_button != blank -%}
+                {% render 'button', content: section.settings.text_button, href: section.settings.url, style: section.settings.style, background: section.settings.background, text_color: section.settings.text_color, block: block %}
+              {%- endif -%}
+</div>
+  </div>
+</div>
+  </div>
+  <style>    
+    .features_section{
+          display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    }
+    .features_block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+}
+.content_feature{
+    background-color: #f8f6f3;
+    padding: 40px;
+    display: grid;
+    align-items: center;
+    justify-items: start;
+    align-content: center;
+    }
+
+        .feature h2 {
+          color: #000;
+          font-size: 24px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 130%; /* 31.2px */
+          letter-spacing: -0.24px;
+          text-decoration-line: underline;
+        }
+#{{ section.id }} .banner_heading{
+   font-size: {{ section.settings.banner_heading }}px;
+    color: var(--Black, #111);
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110%;
+    letter-spacing: -0.96px;
+}
+.desktop_order{order:99;}
+    /* .feature {
+    display: grid;
+    gap: 20px;
+} */
+    .feature h2 {
+    padding-bottom: 20px;
+}
+@media screen and (max-width: 749px) {
+ .feature h2 {
+    padding-bottom: 12px;
+}
+  .mobile_order{order:99;}
+  #{{ section.id }} .banner_heading{
+      font-size: {{ section.settings.banner_heading_mob }}px;
+      letter-spacing: -0.72px;
+  }
+.features_section{
+    grid-template-columns: 1fr;
+    gap: 40px;
+    }
+    .features_block {
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+  .content_feature {
+    padding: 30px 20px;
+  }
+}
+
+    </style>
+
+
+{% schema %}
+{
+  "name": "Features Section",
+  "class": "shopify-section--image-with-text",
+  "tag": "section",
+  "max_blocks": 6,
+  "disabled_on": {
+    "groups": ["header", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:global.colors.scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "separate_section_with_border",
+      "label": "t:global.section.separate_section_with_border",
+      "default": true
+    },
+     {
+      "type": "checkbox",
+      "id": "enable_container",
+      "label": "Enable Container",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "content_width_container",
+      "label": "Section Width",
+      "options": [
+        {
+          "value": "xs",
+          "label": "t:global.sizes.x_small"
+        },
+        {
+          "value": "sm",
+          "label": "t:global.sizes.small"
+        },
+        {
+          "value": "md",
+          "label": "t:global.sizes.medium"
+        },
+        {
+          "value": "lg",
+          "label": "t:global.sizes.large"
+        },
+        {
+          "value": " ",
+          "label": "Fill Width"
+        }
+      ],
+      "default": "sm"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Content Position",
+      "options": [
+        {
+          "value": "start",
+          "label": "t:global.position.left"
+        },
+        {
+          "value": "end",
+          "label": "t:global.position.right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "content_position_mob",
+      "label": "Content Position Mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "top"
+        },
+        {
+          "value": "end",
+          "label": "bottom"
+        }
+      ]
+    },
+ 
+        {
+          "type": "inline_richtext",
+          "id": "subheading",
+          "label": "t:global.text.text",
+          "default": "Subheading"
+        
+    },
+
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "t:global.text.text",
+          "default": "Heading"
+        },
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "label": "t:global.text.style",
+          "options": [
+            {
+              "value": "h1",
+              "label": "H1"
+            },
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            }
+          ],
+          "default": "h1"
+      
+    },
+
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "t:global.text.content",
+          "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+      
+    },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "t:global.text.style",
+          "options": [
+            {
+              "value": "outline",
+              "label": "t:global.text.button_style_options.outline"
+            },
+            {
+              "value": "solid",
+              "label": "t:global.text.button_style_options.solid"
+            }
+          ],
+          "default": "solid"
+        },
+        {
+          "type": "text",
+          "id": "text_button",
+          "label": "t:global.text.text",
+          "default": "Button text"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "t:global.text.link"
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "t:global.colors.background"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "t:global.text.text"
+    },
+    {
+      "type": "number",
+      "id": "banner_heading",
+      "label": "Heading Font Size (Desktop px)"
+    },
+     {
+      "type": "number",
+      "id": "banner_heading_mob",
+      "label": "Heading Font Size (Mobile px)"
+    },
+    {
+      "type": "checkbox",
+      "id": "remove_vertical_spacing",
+      "label": "t:global.spacing.remove_vertical_spacing",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "content",
+      "name": "t:sections.image_with_text.blocks.button.name",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Feature Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Feature Content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Features Section"
+    }
+  ]
+}
+{% endschema %}

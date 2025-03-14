@@ -1,0 +1,452 @@
+{%- if section.blocks.size > 0 -%}
+  {%- assign color_scheme_hash = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background | md5 -%}
+
+  <div class="section-spacing color-scheme color-scheme--{{ section.settings.color_scheme.id }} color-scheme--bg-{{ color_scheme_hash }} {% if section.settings.separate_section_with_border %}bordered-section{% endif %}">
+    <div class="container container--lg">
+      <div class="section-stack">
+
+        <div class="tabs-faq-container flex flex-wrap">
+          <div class="custom_tab">
+            <!-- TABS HEADING -->
+            {%- render 'section-header', subheading: section.settings.tabs_subheading, heading: section.settings.tabs_title, content: section.settings.tabs_content, text_alignment: section.settings.text_alignment -%}
+            <!-- TABS SECTION (LEFT 50%) -->
+            <div class="tabs-container w-full sm:w-1/2">
+            <!-- DESKTOP LAYOUT -->
+            <x-tabs class="content-tabs {% if section.settings.text_alignment == 'center' %}content-tabs--center{% endif %}">
+              <template shadowrootmode="open">
+                <slot role="tablist" part="tab-list" name="title"></slot>
+                <slot part="tab-panel-list" name="content"></slot>
+              </template>
+
+              {%- for block in section.blocks -%}
+                {%- liquid
+                  assign title = block.settings.title | default: block.settings.page.title
+
+                  if block.type == 'tab'
+                    assign content = block.settings.content | default: block.settings.page.content
+                  elsif block.type == 'liquid'
+                    assign content = block.settings.liquid
+                  endif
+                -%}
+
+                {%- if title != blank and content != blank -%}
+                  <button class="h6 button" type="button" role="tab" slot="title" {{ block.shopify_attributes }}>{{ title }}</button>
+
+                  <div role="tabpanel" slot="content" {% cycle '', 'hidden', 'hidden', 'hidden', 'hidden' %}>
+                    <div class="prose">
+                      {{- content -}}
+                      {% if block.settings.feature_image != blank %}
+                      <img class="feature_image" src='{{ block.settings.feature_image | img_url: "master" }}'>
+                      {% endif %}
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </x-tabs>
+          </div>
+          </div>
+          <div class="custom_faq">
+            <!-- FAQ HEADING -->
+            {%- render 'section-header', subheading: section.settings.faq_subheading, heading: section.settings.faq_title, content: section.settings.faq_content, text_alignment: section.settings.text_alignment -%}
+            <!-- FAQ SECTION (RIGHT 50%) -->
+            <div class="faq-container w-full sm:w-1/2">
+            <div class="faq">
+              {%- assign categories_blocks = section.blocks | where: 'type', 'category' -%}
+
+              {%- if section.settings.show_categories and categories_blocks.size > 0 -%}
+                <faq-toc class="faq__toc hidden md:grid">
+                  {%- for block in categories_blocks -%}
+                    <a class="faq__toc-item {% if forloop.first %}is-active{% endif %}" href="#block-{{ block.id }}">{{ block.settings.title }}</a>
+                  {%- endfor -%}
+                </faq-toc>
+              {%- endif -%}
+
+              <div class="faq__content">
+                {%- for block in section.blocks -%}
+                  {%- case block.type -%}
+                    {%- when 'category' -%}
+                      {%- if block.settings.title != blank -%}
+                        <p id="block-{{ block.id }}" class="faq__category h4" {{ block.shopify_attributes }}>
+                        {%- if block.settings.custom_icon != blank -%}
+                          {%- capture sizes -%}{{ block.settings.icon_width }}px{%- endcapture -%}
+                          {%- capture widths -%}{{ block.settings.icon_width }}, {{ block.settings.icon_width | times: 2 | at_most: block.settings.custom_icon.width }}{%- endcapture -%}
+                          {%- capture style -%}--image-max-width: {{ block.settings.icon_width }}px{%- endcapture -%}
+
+                          {{- block.settings.custom_icon | image_url: width: block.settings.custom_icon.width | image_tag: sizes: sizes, widths: widths, class: 'constrained-image', style: style -}}
+                        {%- elsif block.settings.icon != 'none' -%}
+                          {%- render 'icon' with block.settings.icon, width: block.settings.icon_width -%}
+                        {%- endif -%}
+
+                          {{- block.settings.title -}}
+                        </p>
+                      {%- endif -%}
+
+                    {%- when 'question' -%}
+                      {%- if block.settings.question != blank and block.settings.answer != blank -%}
+                        {%- capture answer -%}
+                          <div class="prose">
+                            {{- block.settings.answer -}}
+                          </div>
+                        {%- endcapture -%}
+
+                        {%- render 'accordion', title: block.settings.question, content: answer, show_title_as_text: true, block: block -%}
+                      {%- endif -%}
+                  {%- endcase -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+<style>
+.tabs-faq-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.custom_tab {}
+
+.custom_faq,.custom_tab {
+    background: var(--Hell-Braun, #FAF9F7);
+    padding: 35px;
+    /* box-shadow: 0px 0.25px 100px 0px rgba(0, 0, 0, 0.2), 
+  0px 0.25px 100px 0px rgba(0, 0, 0, 0.1); */
+}
+
+.custom_faq .faq-container {
+    margin-top: 30px;
+}
+
+.custom_faq span.accordion__toggle {
+    background: #fff;
+    padding-left: 30px;
+    padding-right: 30px;
+    border: unset;
+      margin-bottom: 20px;
+}
+.custom_faq span.accordion__toggle .text-with-icon{
+  color: var(--Black, #111);
+  font-family: "Cormorant Garamond";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 130%; /* 31.2px */
+  letter-spacing: -0.24px;
+}
+.custom_faq .accordion__content {
+    padding-left: 30px;
+}
+.custom_faq .accordion {
+    border: unset;
+}
+
+.custom_tab .tabs-container {
+    margin-top: 20px;
+}
+.custom_tab .content-tabs slot {
+    border: unset;
+    box-shadow: unset;
+}
+
+
+.custom_tab .content-tabs::part(tab-list) {
+    border-block-end: unset;
+    gap: 8px;
+}
+.feature_image{
+      float: inline-end;
+}
+.custom_tab .button {
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%;
+    padding: 8px 16px;
+      box-shadow: unset;
+}
+
+.custom_tab .content-tabs [role=tab]:not([aria-selected=true]) {
+    opacity: 1;
+    background: #fff;
+    color: #000;
+}
+.tabs-faq-container .prose p {
+    color: var(--Paragraph-Color, #929292);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%;
+}
+  .tabs-faq-container .prose p strong{
+    color: var(--Body-Text-Color, #4E4E4E);
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 160%; /* 25.6px */
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: none;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+  }
+@media screen and (max-width: 899px) {
+    .tabs-faq-container .prose p strong{
+    font-size: 14px;
+    }
+  .tabs-faq-container {
+    grid-template-columns: 1fr;
+  }
+  .custom_tab .button {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+  .custom_tab .content-tabs::part(tab-list) {
+   display: flex;
+        flex-wrap: wrap;
+}
+  .custom_faq, .custom_tab{padding:30px 12px;}
+  .custom_faq span.accordion__toggle .text-with-icon{
+    font-size: 20px;
+    font-weight: 400;
+  }
+}
+</style>
+{% schema %}
+{
+  "name": "FAQ and Tab",
+  "class": "shopify-section--tabs-faq",
+  "tag": "section",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:global.colors.scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "separate_section_with_border",
+      "label": "t:global.section.separate_section_with_border",
+      "default": true
+    },
+    {
+      "type": "inline_richtext",
+      "id": "tabs_subheading",
+      "label": "t:global.text.tabs_subheading",
+      "default": "Tabs Subheading"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "tabs_title",
+      "label": "t:global.text.tabs_heading",
+      "default": "Tabs Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "tabs_content",
+      "label": "t:global.text.tabs_content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "faq_subheading",
+      "label": "t:global.text.faq_subheading",
+      "default": "FAQ Subheading"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "faq_title",
+      "label": "t:global.text.faq_heading",
+      "default": "FAQ Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "faq_content",
+      "label": "t:global.text.faq_content"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:global.text.alignment",
+      "options": [
+        {
+          "value": "start",
+          "label": "t:global.position.left"
+        },
+        {
+          "value": "center",
+          "label": "t:global.position.center"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_categories",
+      "label": "t:sections.faq.show_categories"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "t:sections.tabs.blocks.tab.name",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "t:global.text.title",
+          "default": "Tab"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "t:global.text.content",
+          "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "feature_image",
+          "label": "Content Feature Image"          
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "t:sections.tabs.blocks.tab.page",
+          "info": "t:sections.tabs.blocks.tab.page_info"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_on_mobile",
+          "label": "t:sections.tabs.blocks.tab.open_on_mobile",
+          "info": "t:sections.tabs.blocks.tab.open_on_mobile_info",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "liquid",
+      "name": "t:sections.tabs.blocks.liquid.name",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "t:global.text.title",
+          "default": "Tab"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid",
+          "label": "t:global.code.liquid",
+          "default": "<p>Use Liquid code to create advanced customization.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_on_mobile",
+          "label": "t:sections.tabs.blocks.tab.open_on_mobile",
+          "info": "t:sections.tabs.blocks.tab.open_on_mobile_info",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "name": "t:sections.faq.blocks.category.name",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "t:global.text.title",
+          "default": "Category"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "t:global.icons.icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "t:global.icons.none"
+            },
+            {
+              "value": "picto-award-gift",
+              "label": "t:global.icons.award_gift",
+              "group": "t:global.icons.shop_category"
+            }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "t:global.icons.custom_icon",
+          "info": "t:global.icons.custom_icon_info"
+        },
+        {
+          "type": "range",
+          "id": "icon_width",
+          "min": 12,
+          "max": 32,
+          "step": 4,
+          "unit": "px",
+          "label": "t:global.icons.icon_width",
+          "default": 16
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "t:sections.faq.blocks.question.name",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "question",
+          "label": "t:sections.faq.blocks.question.question",
+          "default": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "t:sections.faq.blocks.question.answer",
+          "default": "<p>Write a clear and concise answer to guide your customers.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom FAQ and Tab",
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Tab 1",
+            "content": "<p>Use this text to share information about your brand with your customers.</p>"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Tab 2",
+            "content": "<p>Describe a product, share announcements, or welcome customers to your store.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Do you ship overseas?",
+            "answer": "<p>Yes, we ship all over the world. Shipping costs will apply, and will be added at checkout.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

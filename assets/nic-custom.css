@@ -1,0 +1,385 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: "Cormorant Garamond" !important;
+}
+
+.status-error.status-code-500 {
+  display:none;
+}
+
+@media screen and (min-width: 999px) {
+  .header__primary-nav-item .h6 {
+    font-size: 16px !important;
+  }
+  .footer-payments div .unstyled-list {
+    display: flex;
+    gap: 10px;
+  }
+}
+
+.text-with-icons-padding {
+  padding-top: 25px !important;
+  padding-bottom: 25px !important;
+}
+
+.text-with-icons-text p {
+  font-family: "Cormorant Garamond";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+@media screen and (max-width: 699px) {
+  .text-with-icons-text p {
+    font-family: "Cormorant Garamond";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.16px;
+  }
+}
+
+.newsletter-text .section-header .prose h2 {
+  font-family: "Cormorant Garamond";
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.32px;
+  color: #faf9f7;
+}
+
+.newsletter-text .section-header .prose p {
+  color: #929292;
+  text-align: center;
+  font-family: Lato;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%;
+}
+
+@media screen and (max-width: 699px) {
+  .newsletter-text .section-header .prose h2 {
+    font-family: "Cormorant Garamond";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 130%;
+    letter-spacing: -0.24px;
+    color: #faf9f7;
+  }
+
+  .newsletter-text .section-header .prose p {
+    color: var(--Paragraph-Color, #929292);
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%;
+  }
+}
+
+.header__primary-nav-item:before {
+    background: none;
+}
+
+header#shopify-section-sections--23750162678028__header {
+    box-shadow: 0px 4px 4px 0px #8B8B8B1A;
+}
+
+.image-with-text {
+    display: block;
+}
+
+.image-with-text .banner_content p {
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25.6px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+.prose a.button {
+    font-family: Lato;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 21.6px;
+    letter-spacing: 0.01em;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+@media screen and (min-width: 768px) {
+
+.feature-badge-list {
+    gap: 4px;
+}
+
+.product-info__block-list>:not(:nth-child(1 of:not(:empty))) {
+    margin-block-start: 0 !important;
+    margin-block-end: 18px;
+}
+h1.product-title.h1 {
+    padding-bottom: 8px;
+}
+label.block-swatch {
+    font-family: Lato;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 27px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+.variant-picker__option-info.h-stack.justify-between.gap-2 legend {
+    font-size: 14px !important;
+    font-family: Lato;font-size: 14px;font-weight: 400;line-height: 22.4px;text-align: left;text-underline-position: from-font;text-decoration-skip-ink: none;}
+
+
+.product-info__block-item[data-block-id="liquid_jPykdf"] {
+    margin-block-start: 15px !important;
+}
+
+.product-info__block-list .product-info__block-item[data-block-type="customer-reviews"] {
+    margin-block-end: 0 !important;
+}
+.product-info__block-item[data-block-id="title"] {
+    margin-block-start: 0 !important;
+    margin-block-end: 0px !important;
+}
+  
+
+
+.cust-slider__item {
+    margin-left: 0 !important;
+}
+#ss-scrolling-logo-cloud > div > div {
+    padding-left: 200px !important;
+    gap: 220px !important;
+    width: calc((220px * 5) + (140px * 5)) !important;
+}
+}
+
+.scrolling-logo-cloud_template--23750162776332__scrolling_logos_izXLyX {
+    margin-top: 0;
+}
+
+
+p.h6.uni_subheading {
+    font-family: Lato;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16.8px;
+    letter-spacing: 0.03em;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+h2.h2.uni_section_heading {
+    styleName: H1;
+    font-family: Cormorant Garamond;
+    font-size: 44px;
+    font-weight: 500;
+    line-height: 52.8px;
+    letter-spacing: -0.015em;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+a.button {
+    padding: 13px 21.5px;
+}
+
+
+.featured-collections-carousel__item .product-title {
+    styleName: H5;
+    font-family: Cormorant Garamond;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24.22px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+.variant-title {
+    margin-top: 2px;
+}
+
+.price_tax_info {
+    font-family: Jost;
+    font-size: 9px;
+    font-weight: 400;
+    line-height: 13.01px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #A2A2A2;
+}
+
+.featured-collections-carousel__item .product-card__info {
+    margin-top: 15px;
+}
+
+.image-with-text:nth-child(2) p.banner_heading.h1 {
+    max-width: 363px;
+}
+
+.image-with-text .badge_content {}
+
+.image-with-text:nth-child(2) .banner_content p {
+    max-width: 388px;
+}
+
+/* .image-with-text:nth-child(2) picture img {
+    width: 553px;
+    height: 705px;
+    top: 1433px;
+    left: 121px;
+    gap: 0px;
+} */
+
+.button:hover {
+    background-color: #111 !important;
+    color: #fff !important;
+    opacity: 0.7 !important;
+}
+
+.feature .banner_content {
+    line-height: 25.6px !important;
+}
+
+
+
+.feature {
+    display: block;
+}
+
+p.banner_heading.h1 {//
+    styleName: H2;
+    font-family: Cormorant Garamond;
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 52px;
+    letter-spacing: -0.014em;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+
+
+.section-template--23750162776332__faq_double_ggbkCt-settings {
+    padding-top: 0 !important;
+}
+
+.faq-toggle-template--23750162776332__faq_double_ggbkCt,
+.faq-item-template--23750162776332__faq_double_ggbkCt {
+    margin-bottom: 12px;
+}
+
+.section-spacing.section-spacing--tight.color-scheme.color-scheme--scheme-2494422f-a129-4a52-aca4-b51ac543c29b.color-scheme--bg-8accf873725cbeb59ab871308563230b {
+    padding: 31px 0 !important;
+}
+
+.text-with-icons .prose {
+    font-family: Cormorant Garamond;
+}
+
+.text-with-icons__item > div {
+    gap: 16px;
+}
+
+.footer {
+    padding: 0 !important;
+}
+
+.section-spacing.color-scheme.color-scheme--scheme-2.color-scheme--bg-54922f2e920ba8346f6dc0fba343d673 {
+    padding-bottom: 90px !important;
+}
+
+.section-spacing.color-scheme.color-scheme--scheme-4.color-scheme--with-image-overlay {
+    padding-top: 0 !important;
+}
+
+
+
+compare-at-price.h6.text-subdued.line-through {
+    font-family: Lato !important;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+}
+
+on-sale-badge.badge.badge--on-sale {font-family: Lato;font-size: 12px;font-weight: 700;line-height: 16.8px;text-align: center;border-radius: 20px;text-underline-position: from-font;text-decoration-skip-ink: none;padding: 5px 10px;}
+
+
+#shopify-section-template--23750163431692__custom_image_grids_LxUcxL .section-spacing.color-scheme.color-scheme--scheme-2.color-scheme--bg-54922f2e920ba8346f6dc0fba343d673 {
+    padding-bottom: 35px !important;
+}
+
+
+span.cust-review-stars {
+    font-size: 18px;
+}
+
+.products-bundle--selector-container .influencer_section {
+  background: white;
+  background: rgba(250, 249, 247, 0.80);
+  margin-top: 40px;
+}
+.free-add {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    align-items: center;
+   gap:20px;
+    padding: 0 18px 0 30px;
+    margin-top: 30px;
+    position: relative;
+}
+.free-add img{z-index: 1;}
+.free-add p {
+    color: #000;
+    font-family: "Cormorant Garamond";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 130%;
+    letter-spacing: -0.24px;
+    z-index: 1;
+}
+
+.free-add:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 60%;
+    top: 20%;
+    background: #FAF9F7;
+}
+
+.line-item-info .h6.text-subdued.line-through,
+.line-item-info .h6.text-on-sale {
+  font-size:16px;
+  font-family: Lato!important;
+}

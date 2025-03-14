@@ -1,0 +1,136 @@
+{% schema %}
+{
+  "name": "Image Grid Section",
+  "settings": [
+     {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:global.colors.scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "separate_section_with_border",
+      "label": "t:global.section.separate_section_with_border",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:global.sizes.section_width",
+      "options": [
+        {
+          "value": "xs",
+          "label": "t:global.sizes.x_small"
+        },
+        {
+          "value": "sm",
+          "label": "t:global.sizes.small"
+        },
+        {
+          "value": "md",
+          "label": "t:global.sizes.medium"
+        },
+        {
+          "value": "lg",
+          "label": "t:global.sizes.large"
+        },
+        {
+          "value": "full",
+          "label": "t:global.sizes.full_width"
+        }
+      ],
+      "default": "lg"
+    },
+    {
+      "type": "number",
+      "id": "images_per_row",
+      "label": "Images per Row",
+      "default": 5
+    },
+    {
+      "type": "number",
+      "id": "gap_between_images",
+      "label": "Gap Between Images (px)",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "remove_vertical_spacing",
+      "label": "t:global.spacing.remove_vertical_spacing",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_block",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Upload Image"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt Text",
+          "default": "Sultan of Style"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Image grids",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+{%- assign color_scheme_hash = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background | md5 -%}
+
+  <div class="{% unless section.settings.remove_vertical_spacing %}section-spacing{% endunless %} color-scheme color-scheme--{{ section.settings.color_scheme.id }} color-scheme--bg-{{ color_scheme_hash }} {% if section.settings.separate_section_with_border %}bordered-section{% endif %}">
+ <div class="cust-image-grid_container container {% unless section.settings.section_width == 'full' %}container--{{ section.settings.section_width }}{% endunless %}">
+<div class="cust-image-grid">
+  {% for block in section.blocks %}
+    {% if block.settings.image != blank %}
+    <div class="cust-image-grid__item">
+      <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.alt_text }}">
+    </div>
+      {% endif %}
+  {% endfor %}
+</div>
+ </div>
+  </div>
+<style>
+  .cust-image-grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.images_per_row }}, 1fr);
+    gap: {{ section.settings.gap_between_images }}px;
+    margin: 0 auto;
+  }
+  .cust-image-grid__item {
+    width: 100%;
+    overflow: hidden;
+  }
+  .cust-image-grid__item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+    @media screen and (max-width: 699px) {
+    .cust-image-grid{
+          display: flex;
+      gap: 8px;
+    }
+  .cust-image-grid_container{
+        margin: 0;
+    overflow: scroll;
+  }
+  .cust-image-grid__item {
+    min-width: 25%;
+}
+  }
+</style>
+

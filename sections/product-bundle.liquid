@@ -1,0 +1,708 @@
+<style>
+      html, body{
+        scroll-behavior: smooth;
+      }
+      .product-bundle-container{
+        display: flex;
+        padding: 3.2rem;
+        justify-content: space-between;
+      }
+      .product-bundle .page-width{
+        max-width: 1500px;
+        margin: auto;
+      }
+      .products-bundle--products-container{
+        width: 49%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+      .products-bundle--selector-container{
+        width: 49%;
+      }
+      .products-bundle--products{
+        width: calc(50% - 18px);
+        margin-bottom: 20px;
+      }
+      .products-bundle--products img{
+        height: 21vw;
+        object-fit: cover;
+        width: 21vw;
+      }
+      .products-bundle--add-to-cart {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 68%;
+        /* margin: auto; */
+        background: black;
+        color: white;
+        padding: 16px;
+        gap: 5px;
+        margin-top: 18px;
+        cursor: pointer;
+    }
+      .products-bundle--selector{
+        background: #faf9f7;
+        padding: 38px 45px;
+      }
+      .products-bundle-selected-products{
+        display: flex;
+        gap: 20px;
+        justify-content:center;
+        flex-wrap: wrap;
+      }
+      .pb-selected-product-plus{
+        color: #d7d5d3;
+        border: 1px solid #d7d5d3;
+        font-size: 60px;
+        font-family: auto;
+        width: 28%;
+        height: 230px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      .pb-selected-product-plus img{
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+      }
+      .products-bundle-title h3{
+        font-size: 32px;
+        line-height: normal;
+        text-align: center;
+        margin-top: 30px;
+        font-weight: 400;
+      }
+      .products-bundle-number-selector{
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 25px;
+      }
+      .products-bundle-different-number{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        border: 1px solid #D0D5DD;
+        padding: 5px 15px;
+        gap: 5px;
+        cursor: pointer;
+      }
+      .products-bundle-different-number-text1{
+        text-align: center;
+        line-height: normal;
+        font-size: 17px;
+      }
+      .products-bundle-different-number-text2{
+        text-align: center;
+         line-height: normal;
+        font-size: 11px;
+        opacity: 0.8;
+      }
+      .products-bundle-final-price-container{
+        text-align: center;
+      }
+      .products-bundle-checkout-btn{
+        background: black;
+        color: white;
+        padding: 16px 0px;
+        font-size: 18px;
+        width: 65%;
+      }
+      .products-bundle-final-price{
+        font-size: 20px;
+        padding: 15px;
+      }
+
+    .risk-free-wrapper {
+       display: flex;
+       justify-content: center;
+       gap: 14px;
+       align-items: center;
+       margin-top: 16px;
+      }
+
+    .risk-free-text {
+      color: #292929;
+  text-align: center;
+  font-family: Lato;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%;
+    }
+
+      .products-bundle-text-line {
+        font-size: 12px;
+        margin-top: 10px;
+        opacity: 0.6;
+    }
+      .products-bundle-tick{
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 68%;
+        background: black;
+        color: white;
+        padding: 16px;
+        gap: 5px;
+        margin-top: 18px;
+        cursor: pointer;
+      }
+      .pb-cross-svg-container {
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+      .pb-cross-svg-container:hover{
+        transform: scale(1.2);
+      }
+      .width-full{
+        width: 45% !important;
+      }
+      .products-bundle--products-image .product-title {
+        color: #000;
+        font-family: "Cormorant Garamond";
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: -0.24px;
+    }
+      .products-bundle-different-number .products-bundle-different-number-text2 {
+        font-family: Lato;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+    }
+       @media screen and (min-width: 768px){
+        .products-bundle-different-number.active-bundle-number .products-bundle-different-number-text2 {
+        color: #000;
+        background: var(--Hell-Braun, #FAF9F7);
+        opacity: 1;
+        }
+
+        .products-bundle-different-number .products-bundle-different-number-text2 {
+            padding: 3px 8px;
+            background: var(--Farbe, #B8A189);
+            color: #fff;
+        }
+         .largehide {
+           display:none;
+         }
+         .products-bundle-number-selector .products-bundle-different-number:last-child .products-bundle-different-number-text2 {
+  font-size: 9px;
+}
+      }
+      @media screen and (max-width: 999px){
+        .product-bundle-container{
+          padding: 2.2rem;
+        }
+      }
+      @media screen and (max-width: 767px){
+      .products-bundle--products-image .product-title {
+        font-size: 14px;
+        letter-spacing: -0.14px;
+      }
+
+      .smallhide {
+        display:none;
+      }
+
+        .products-bundle--selector {
+          margin-top: 2.5rem;
+        }
+
+        .free-add p {
+           font-size:16px !important;
+         }
+
+        .product-bundle-container {
+        display: flex;
+        flex-direction: column-reverse;
+        padding: 0;
+      }
+        .products-bundle--products-container{
+          width: 100%;
+          margin-top:18px;
+          justify-content: center;
+        }
+        .products-bundle--selector-container{
+          width: 100%;
+        }
+        .products-bundle--products img{
+          margin: auto;
+          height: 100%;
+          width: 100%;
+        }
+
+        .risk-free-text {
+          font-size:13px;
+        }
+
+        .products-bundle-number-selector{
+          flex-wrap: wrap;
+        }
+        .products-bundle--add-to-cart{
+          width: 90%;
+          padding: 10px;
+        }
+        .products-bundle-title h3{
+        font-size: 22px;
+        }
+        .products-bundle-different-number {
+        width: 48%;
+    }
+        .products-bundle-selected-products{
+          flex-wrap:wrap;
+          justify-content: center;
+        }
+        .pb-selected-product-plus{
+          width: 45%;
+          height: 200px;
+        }
+        .products-bundle--selector{
+          padding: 30px 20px;
+        }
+        .products-bundle-tick{
+          width: 90%;
+          padding: 10px;
+        }
+      }
+</style>
+
+<div class="product-bundle">
+  <div class="page-width">
+    <div>
+      <div class="product-bundle-container">
+        {% assign collection = section.settings.collection1 %}
+        <div id="products-bundle-products" class="products-bundle--products-container">
+          {% for product in collection.products %}
+            <div
+              product-price="{{ product.price }}"
+              data-variant="{{ product.selected_or_first_available_variant.id }}"
+              class="products-bundle--products"
+            >
+              <div class="products-bundle--products-image">
+                {%- render 'product-card',
+                  product: product,
+                  position: forloop.index,
+                  hide_product_information: false,
+                  block: section
+                -%}
+              </div>
+              <button
+                class="products-bundle--add-to-cart"
+                variant_id_com="{{ product.selected_or_first_available_variant.id }}"
+              >
+                <span>
+                  <svg width="25" height="25" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="25" cy="25" r="20" stroke="white" stroke-width="2" fill="none"></circle>
+                    <line x1="25" y1="15" x2="25" y2="35" stroke="white" stroke-width="2"></line>
+                    <line x1="15" y1="25" x2="35" y2="25" stroke="white" stroke-width="2"></line>
+                  </svg>
+                </span>
+                <span>Hinzufügen</span>
+              </button>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="products-bundle--selector-container">
+          <div class="products-bundle--selector">
+            <div class="products-bundle-selected-products">
+              <div class="pb-selected-product-plus width-full">+</div>
+              <div class="pb-selected-product-plus width-full">+</div>
+            </div>
+            <div class="products-bundle-title">
+              <h3>
+                Bau dir dein perfektes Duft-Set und <br>
+                profitiere von bis zu 50% Rabatt!
+              </h3>
+            </div>
+            <div class="products-bundle-number-selector">
+              <div class="products-bundle-different-number">
+                <div class="products-bundle-different-number-text1">2 Düfte</div>
+                <div class="products-bundle-different-number-text2">Spare 35%</div>
+              </div>
+              <div class="products-bundle-different-number">
+                <div class="products-bundle-different-number-text1">3 Düfte</div>
+                <div class="products-bundle-different-number-text2">Spare 40%</div>
+              </div>
+              <div class="products-bundle-different-number">
+                <div class="products-bundle-different-number-text1">4 Düfte</div>
+                <div class="products-bundle-different-number-text2">Spare 45%</div>
+              </div>
+              <div class="products-bundle-different-number">
+                <div class="products-bundle-different-number-text1">5 Düfte</div>
+                <div class="products-bundle-different-number-text2">
+                  Spare 50% <br>
+                  + Gratis Duschgel
+                </div>
+              </div>
+            </div>
+            <div class="products-bundle-final-price-container">
+              <div class="products-bundle-final-price"></div>
+              <button class="products-bundle-checkout-btn">Wähle 2 Düfte aus</button>
+              <div class="products-bundle-text-line">Die Pakete basieren auf den Kosten der Vollpreis-Parfüms.</div>
+              <div class="risk-free-wrapper">
+                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g id="icons (1) 6" clip-path="url(#clip0_512_69)">
+                  <g id="Clip path group">
+                  <mask id="mask0_512_69" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="30" height="30">
+                  <g id="ffa517e01f">
+                  <path id="Vector" d="M0.55957 0.399994H29.4796V29.683H0.55957V0.399994Z" fill="white"/>
+                  </g>
+                  </mask>
+                  <g mask="url(#mask0_512_69)">
+                  <g id="Group">
+                  <path id="Vector_2" d="M15.0359 29.7236C14.9532 29.7236 14.8721 29.7127 14.7925 29.6908C14.7128 29.6689 14.6373 29.6369 14.5664 29.5947L12.1906 28.1675C6.38949 24.6867 2.51293 18.7477 1.29746 11.4548L0.588398 7.25594C0.584023 7.2275 0.580742 7.19891 0.579023 7.17031C0.577148 7.14156 0.57668 7.11281 0.577617 7.08406C0.578398 7.05531 0.580586 7.02672 0.58418 6.99813C0.587773 6.96969 0.592617 6.94125 0.598867 6.91328C0.605117 6.88516 0.612617 6.8575 0.621367 6.83C0.630117 6.80266 0.640273 6.77578 0.651523 6.74938C0.66293 6.72297 0.67543 6.69703 0.68918 6.67188C0.70293 6.64656 0.717773 6.62203 0.733867 6.59813C0.749961 6.57422 0.766992 6.55125 0.785273 6.52891C0.803398 6.50672 0.822617 6.48531 0.84293 6.46484C0.863086 6.44438 0.88418 6.425 0.906211 6.40641C0.928242 6.38797 0.951211 6.37063 0.974805 6.35422C0.998398 6.33797 1.02277 6.32266 1.04793 6.30859C1.07309 6.29453 1.09871 6.28172 1.12496 6.27016C1.15137 6.25844 1.17809 6.24813 1.20543 6.23891C1.23262 6.22984 1.26027 6.22188 1.28824 6.21547L5.4134 5.18406C6.00355 5.05688 6.58527 4.89922 7.15887 4.71109C7.73246 4.52313 8.29465 4.30563 8.84543 4.05891C9.39621 3.81203 9.93277 3.53719 10.4548 3.23438C10.977 2.93156 11.4818 2.60234 11.9696 2.24672L14.5295 0.561719C14.5671 0.536563 14.6064 0.514376 14.6473 0.495001C14.6881 0.475626 14.7303 0.459532 14.7736 0.446407C14.8168 0.433282 14.8607 0.423438 14.9056 0.416719C14.9503 0.410157 14.9953 0.406876 15.0406 0.406876C15.0857 0.406876 15.1307 0.410157 15.1754 0.416719C15.2203 0.423438 15.2642 0.433282 15.3075 0.446407C15.3507 0.459532 15.3929 0.475626 15.4337 0.495001C15.4746 0.514376 15.5139 0.536563 15.5515 0.561719L18.0837 2.24672C18.5732 2.6 19.0795 2.92703 19.6028 3.22781C20.1261 3.52859 20.6636 3.80172 21.215 4.04688C21.7665 4.29203 22.3292 4.50813 22.9031 4.69516C23.477 4.88203 24.059 5.03891 24.6492 5.16563L28.7651 6.19703C28.7929 6.20375 28.8204 6.21188 28.8475 6.22125C28.8745 6.23047 28.9011 6.24109 28.927 6.25297C28.9531 6.26469 28.9786 6.27781 29.0034 6.29203C29.0282 6.30609 29.0523 6.32141 29.0757 6.33797C29.0992 6.35438 29.1218 6.37188 29.1436 6.39047C29.1654 6.40891 29.1862 6.42844 29.2062 6.44891C29.2262 6.46953 29.2451 6.49078 29.2631 6.51313C29.2811 6.53531 29.2979 6.55844 29.3139 6.58234C29.3296 6.60609 29.3443 6.63063 29.3578 6.65578C29.3714 6.68109 29.3837 6.70688 29.3948 6.73313C29.4059 6.75953 29.4159 6.78641 29.4245 6.81359C29.4331 6.84094 29.4404 6.86859 29.4465 6.89656C29.4526 6.92453 29.4573 6.95266 29.4607 6.98109C29.4642 7.00953 29.4664 7.03797 29.467 7.06656C29.4678 7.09516 29.4673 7.12375 29.4654 7.15234C29.4636 7.18078 29.4603 7.20922 29.4557 7.2375L28.7743 11.4548C27.5589 18.7477 23.6915 24.6867 17.8812 28.1675L15.5148 29.5947C15.3664 29.6792 15.2067 29.7222 15.0359 29.7236ZM2.55902 7.77156L3.12074 11.1325C4.27168 17.9005 7.80762 23.4253 13.139 26.5928L15.0359 27.7255L16.9328 26.5928C22.2734 23.4253 25.8278 17.9005 26.9604 11.1509L27.5128 7.77156L24.2164 6.95203C23.5756 6.81125 22.9437 6.63859 22.3204 6.43375C21.6973 6.22891 21.0861 5.99313 20.4868 5.72641C19.8875 5.45953 19.3032 5.16313 18.734 4.83719C18.1648 4.51109 17.6134 4.15719 17.0801 3.77531L15.0359 2.43094L12.9917 3.79375C12.4587 4.17609 11.9075 4.53031 11.3384 4.85656C10.7692 5.18281 10.185 5.47938 9.58574 5.74609C8.98637 6.01297 8.37496 6.24859 7.75168 6.45328C7.1284 6.65781 6.49637 6.83016 5.85543 6.97047L2.55902 7.77156Z" fill="#B8A189"/>
+                  </g>
+                  </g>
+                  </g>
+                  <path id="Vector_3" d="M15.0372 6.85078C14.4173 7.29297 13.7767 7.70297 13.1155 8.08078C12.4542 8.45844 11.7756 8.80188 11.0797 9.11125C10.3837 9.42047 9.67422 9.69391 8.95062 9.93172C8.22719 10.1694 7.49359 10.3702 6.75 10.5341C7.67078 16.2891 10.5712 20.7458 15.0372 23.4253C19.5031 20.7458 22.4036 16.2891 23.3245 10.5341C22.5809 10.3697 21.8475 10.1686 21.1241 9.93063C20.4008 9.69266 19.6911 9.41907 18.9953 9.10985C18.2995 8.80047 17.6208 8.45719 16.9595 8.07969C16.2981 7.70219 15.6573 7.29266 15.0372 6.85078ZM14.7794 17.6334C14.7356 17.6752 14.6884 17.7123 14.6377 17.7452C14.587 17.7781 14.5337 17.8059 14.4778 17.8288C14.4219 17.8516 14.3642 17.8691 14.305 17.8811C14.2458 17.8931 14.1859 17.8995 14.1256 17.9005C14.065 17.9008 14.005 17.8952 13.9455 17.8838C13.8859 17.8722 13.8281 17.855 13.772 17.832C13.7159 17.8092 13.6627 17.7809 13.6122 17.7475C13.5616 17.7141 13.5148 17.6761 13.4719 17.6334L11.8236 15.9944C11.8022 15.973 11.7819 15.9505 11.7627 15.9272C11.7436 15.9038 11.7256 15.8794 11.7087 15.8542C11.692 15.8291 11.6764 15.8031 11.6622 15.7764C11.648 15.7497 11.635 15.7223 11.6234 15.6944C11.6119 15.6664 11.6017 15.638 11.593 15.6091C11.5842 15.58 11.5769 15.5508 11.5709 15.5211C11.565 15.4914 11.5606 15.4614 11.5577 15.4313C11.5547 15.4013 11.5533 15.3709 11.5533 15.3408C11.5533 15.3105 11.5548 15.2803 11.5578 15.2502C11.5608 15.22 11.5652 15.1902 11.5711 15.1605C11.577 15.1308 11.5844 15.1014 11.5931 15.0725C11.6019 15.0436 11.6122 15.015 11.6237 14.9872C11.6353 14.9592 11.6483 14.9319 11.6625 14.9052C11.6767 14.8784 11.6923 14.8525 11.7092 14.8273C11.7259 14.8022 11.7439 14.778 11.7631 14.7545C11.7823 14.7311 11.8027 14.7088 11.8241 14.6873C11.8455 14.6659 11.8678 14.6456 11.8912 14.6264C11.9147 14.6072 11.9389 14.5892 11.9641 14.5723C11.9892 14.5556 12.0152 14.54 12.0419 14.5258C12.0686 14.5116 12.0959 14.4986 12.1239 14.487C12.1519 14.4753 12.1803 14.4652 12.2092 14.4564C12.2383 14.4477 12.2675 14.4403 12.2972 14.4344C12.3269 14.4284 12.3569 14.4241 12.3869 14.4209C12.417 14.418 12.4472 14.4166 12.4775 14.4166C12.5078 14.4166 12.538 14.418 12.5681 14.4209C12.5983 14.4239 12.6281 14.4283 12.6578 14.4342C12.6875 14.4402 12.7169 14.4475 12.7458 14.4563C12.7747 14.465 12.8033 14.4752 12.8312 14.4867C12.8592 14.4983 12.8866 14.5113 12.9131 14.5255C12.9398 14.5397 12.9658 14.5552 12.9909 14.572C13.0162 14.5888 13.0405 14.6067 13.0639 14.6259C13.0873 14.6452 13.1097 14.6655 13.1311 14.6869L14.1256 15.6813L17.2656 12.5414C17.2873 12.5227 17.31 12.5052 17.3333 12.4886C17.3567 12.472 17.3809 12.4566 17.4058 12.4423C17.4306 12.428 17.4561 12.415 17.4822 12.403C17.5083 12.3911 17.5348 12.3805 17.5619 12.3711C17.5891 12.3616 17.6166 12.3534 17.6444 12.3467C17.6722 12.3398 17.7003 12.3342 17.7286 12.33C17.757 12.3258 17.7855 12.3228 17.8141 12.3213C17.8428 12.3197 17.8714 12.3195 17.9 12.3206C17.9288 12.3217 17.9572 12.3242 17.9856 12.328C18.0141 12.3317 18.0422 12.3369 18.0702 12.3431C18.0981 12.3495 18.1258 12.3573 18.153 12.3663C18.1802 12.3753 18.207 12.3855 18.2333 12.397C18.2595 12.4084 18.2852 12.4211 18.3103 12.435C18.3353 12.4489 18.3597 12.4639 18.3834 12.4802C18.4072 12.4963 18.43 12.5134 18.452 12.5317C18.4742 12.55 18.4953 12.5694 18.5156 12.5897C18.5359 12.6098 18.5552 12.6311 18.5734 12.6531C18.5917 12.6752 18.6091 12.6981 18.6252 12.7219C18.6412 12.7455 18.6562 12.7698 18.6702 12.795C18.6841 12.82 18.6967 12.8458 18.7083 12.872C18.7197 12.8983 18.73 12.925 18.7389 12.9522C18.748 12.9795 18.7556 13.007 18.762 13.035C18.7684 13.063 18.7736 13.0911 18.7773 13.1195C18.7811 13.148 18.7834 13.1766 18.7847 13.2052C18.7858 13.2339 18.7855 13.2625 18.7839 13.2911C18.7823 13.3197 18.7795 13.3483 18.7752 13.3766C18.7709 13.405 18.7655 13.4331 18.7586 13.4609C18.7517 13.4888 18.7436 13.5163 18.7342 13.5433C18.7247 13.5703 18.7141 13.5969 18.7022 13.623C18.6903 13.6491 18.6772 13.6745 18.663 13.6995C18.6486 13.7244 18.6333 13.7484 18.6167 13.7719C18.6002 13.7953 18.5825 13.818 18.5639 13.8397L14.7794 17.6334Z" fill="#B8A189"/>
+                  </g>
+                  <defs>
+                  <clipPath id="clip0_512_69">
+                  <rect width="30" height="30" fill="white"/>
+                  </clipPath>
+                  </defs>
+                </svg>
+                <div class="risk-free-text">Risikofrei testen: 30 Tage Geld-zurück-Garantie</div>
+              </div>
+            </div>
+          </div>
+          {% if section.settings.free_add_text or section.settings.free_add_image %}
+            <div class="smallhide free-add">
+              {% if section.settings.free_add_text %}
+                <p>{{ section.settings.free_add_text }}</p>
+              {% endif %}
+              {% if section.settings.free_add_image %}
+                <img src="{{ section.settings.free_add_image | img_url: 'master' }}">
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if section.settings.influencer_image_desktop
+            or section.settings.influencer_image_mobile
+            or section.settings.influencer_quote
+            or section.settings.influencer_name
+          %}
+            <div class="smallhide influencer_section">
+              {% if section.settings.influencer_image_desktop %}
+                <img class="doc_img desk_img" src="{{ section.settings.influencer_image_desktop | img_url: 'master' }}">
+              {% endif %}
+              {% if section.settings.influencer_image_mobile %}
+                <img class="doc_img mob_img" src="{{ section.settings.influencer_image_mobile | img_url: 'master' }}">
+              {% endif %}
+
+              {% if section.settings.influencer_quote or section.settings.influencer_name %}
+                <div class="influencer_content prose">
+                  {% if section.settings.influencer_quote %}
+                    <p>{{ section.settings.influencer_quote }}</p>
+                  {% endif %}
+                  {% if section.settings.influencer_name %}
+                    <label>{{ section.settings.influencer_name }}</label>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    {% if section.settings.influencer_image_desktop
+      or section.settings.influencer_image_mobile
+      or section.settings.influencer_quote
+      or section.settings.influencer_name
+    %}
+      <div class="largehide influencer_section">
+        {% if section.settings.influencer_image_desktop %}
+          <img class="doc_img desk_img" src="{{ section.settings.influencer_image_desktop | img_url: 'master' }}">
+        {% endif %}
+        {% if section.settings.influencer_image_mobile %}
+          <img class="doc_img mob_img" src="{{ section.settings.influencer_image_mobile | img_url: 'master' }}">
+        {% endif %}
+
+        {% if section.settings.influencer_quote or section.settings.influencer_name %}
+          <div class="influencer_content prose">
+            {% if section.settings.influencer_quote %}
+              <p>{{ section.settings.influencer_quote }}</p>
+            {% endif %}
+            {% if section.settings.influencer_name %}
+              <label>{{ section.settings.influencer_name }}</label>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if section.settings.free_add_text or section.settings.free_add_image %}
+      <div class="largehide free-add">
+        {% if section.settings.free_add_text %}
+          <p>{{ section.settings.free_add_text }}</p>
+        {% endif %}
+        {% if section.settings.free_add_image %}
+          <img src="{{ section.settings.free_add_image | img_url: 'master' }}">
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  $('.products-bundle-different-number:first').addClass("active-bundle-number");
+  $('.products-bundle-different-number:first').css({ 'background': 'black', 'color': 'white' });
+
+  let selectedQuantity = 2;
+
+  function updatePlusDiv(number) {
+      const $bundleContainer = $(".products-bundle-selected-products");
+      const currentLength = $bundleContainer.children().length;
+
+      if (currentLength > number) {
+          $bundleContainer.children().slice(number).remove();
+      } else {
+          for (let i = currentLength; i < number; i++) {
+              const $plusDiv = $("<div>", { class: "pb-selected-product-plus", text: "+" });
+              $bundleContainer.append($plusDiv);
+          }
+      }
+
+      if (number === 5) {
+          $bundleContainer.children().removeClass("width-full");
+          $bundleContainer.children().slice(0, 2).addClass("width-full");
+      } else if (number === 3) {
+          $bundleContainer.children().removeClass("width-full");
+      } else {
+          $bundleContainer.children().addClass("width-full");
+      }
+      updateAddToCartButtonCount();
+  }
+
+      function updateAddToCartButtonCount() {
+        $('.products-bundle--add-to-cart').each(function() {
+            const buttonVariantId = $(this).attr('variant_id_com');
+
+            const matchedCount = $('.products-bundle-selected-products .pb-selected-product-plus').filter(function() {
+                return $(this).attr('varient-idd') === buttonVariantId;
+            }).length;
+
+            $(this).html('<span><svg width="25" height="25" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">' +
+                         '<circle cx="25" cy="25" r="20" stroke="white" stroke-width="2" fill="none"></circle>' +
+                         '<line x1="25" y1="15" x2="25" y2="35" stroke="white" stroke-width="2"></line>' +
+                         '<line x1="15" y1="25" x2="35" y2="25" stroke="white" stroke-width="2"></line>' +
+                         '</svg></span>' + '<span>Hinzufügen (' + matchedCount + ')</span>');
+        });
+    }
+
+
+
+// Function to check filled slots and update button text
+function checkFilledSlots() {
+    const filledSlots = $('.pb-selected-product-plus').filter(function() {
+        return $(this).find('img').length > 0;
+    }).length;
+
+    if (filledSlots >= selectedQuantity) {
+        $('.products-bundle-checkout-btn').html("In den Warenkorb");
+    } else {
+        $('.products-bundle-checkout-btn').html("Wähle " + selectedQuantity + " Düfte aus");
+    }
+}
+
+$('.products-bundle-different-number').on("click", function () {
+    $('.products-bundle-different-number').removeClass("active-bundle-number").css({ 'background': 'transparent', 'color': 'black' });
+    $(this).addClass("active-bundle-number").css({ 'background': 'black', 'color': 'white' });
+
+    selectedQuantity = parseInt($(this).find('.products-bundle-different-number-text1').text());
+    updatePlusDiv(selectedQuantity);
+
+    checkFilledSlots();
+    $('.products-bundle-final-price').css('visibility', 'hidden');
+    update_pricee();
+});
+
+$(document).on('click', '.products-bundle--add-to-cart', function () {
+    const pprice = $(this).parent().attr('product-price');
+    const variantId = $(this).parent().attr('data-variant');
+    const imgSrc = $(this).parent().find('.products-bundle--products-image img').attr('src');
+    const buybtn = $(this);
+
+    const emptyPlaceholder = $('.pb-selected-product-plus').filter(function () {
+        return $(this).find('img').length === 0;
+    }).first();
+
+    if (emptyPlaceholder.length) {
+        emptyPlaceholder.html('<img src="' + imgSrc + '">')
+            .attr('varient-idd', variantId)
+            .attr('pricee', pprice)
+            .append('<div class="pb-cross-svg-container"><svg width="30px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><circle cx="8.5" cy="8.5" r="8"/><g transform="matrix(0 1 -1 0 17 0)"><path d="m5.5 11.5 6-6"/><path d="m5.5 5.5 6 6"/></g></g></svg></div>');
+
+        buybtn.siblings('.products-bundle-tick').css('display', 'flex');
+        update_pricee();
+        updateAddToCartButtonCount();
+    }
+
+    checkFilledSlots();
+});
+
+
+  $(document).on('click', '.pb-selected-product-plus', function () {
+      if ($(window).width() <= 768 && $(this).find('img').length === 0) {
+          window.location.href = "#products-bundle-products";
+      }
+  });
+
+  $(document).on('click', '.pb-cross-svg-container', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const removeVariant = $(this).parent().attr('varient-idd');
+
+      $('.products-bundle--products').each(function () {
+          if ($(this).attr('data-variant') === removeVariant) {
+              $(this).find('.products-bundle-tick').hide();
+              $(this).find('.products-bundle--add-to-cart').css('display', 'flex');
+          }
+      });
+
+      $(this).parent().removeAttr('varient-idd pricee').html('+');
+      update_pricee();
+      updateAddToCartButtonCount();
+  });
+
+// Script to calculate and display both original and discounted prices with savings
+function update_pricee() {
+    let totalPrice = 0;
+    let discount = 0;
+
+    // Calculate total price of selected products (in cents)
+    $('.pb-selected-product-plus[pricee]').each(function () {
+        totalPrice += parseFloat($(this).attr('pricee'));
+    });
+
+    // Determine discount percentage based on selected quantity
+    switch (selectedQuantity) {
+        case 2:
+            discount = 0.35; // 35% discount
+            break;
+        case 3:
+            discount = 0.40; // 40% discount
+            break;
+        case 4:
+            discount = 0.45; // 45% discount
+            break;
+        case 5:
+            discount = 0.50; // 50% discount
+            break;
+        default:
+            discount = 0;
+    }
+
+    // Calculate discount amount and discounted price
+    const discountAmount = totalPrice * discount;
+    const discountedTotal = (totalPrice - discountAmount) / 100;
+    const originalTotal = totalPrice / 100;
+
+    // Display original price, discounted price, and savings
+    $('.products-bundle-final-price').html(
+        '€' + discountedTotal.toFixed(2) +
+        '<span style="margin-left: 5px; text-decoration: line-through; color: grey;">€' + originalTotal.toFixed(2) + '</span>'
+    );
+    $('.products-bundle-final-price').css('visibility', totalPrice > 0 ? 'visible' : 'hidden');
+}
+
+// Call the updated price function and apply changes to other relevant calls
+update_pricee();
+updateAddToCartButtonCount();
+
+$(document).on('click', '.products-bundle-checkout-btn', function () {
+    const items = [];
+
+    $('.pb-selected-product-plus').each(function () {
+        const variantID = $(this).attr('varient-idd');
+        if (variantID) {
+            items.push({ id: variantID, quantity: 1 });
+        }
+    });
+
+    if (items.length > 0) {
+        $.ajax({
+            type: 'POST',
+            url: '/cart/add.js',
+            data: { items: items },
+            dataType: 'json',
+            success: function () {
+                window.location.href = "/checkout"; // Redirects to checkout directly
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
+    }
+});
+</script>
+{% schema %}
+{
+  "name": "Product Bundle",
+  "settings": [
+    {
+    "type": "collection",
+    "id": "collection1",
+    "label": "Select Collection"
+  },
+    {
+      "type": "header",
+      "content": "Free Add Section"
+    },
+    {
+      "type": "text",
+      "id": "free_add_text",
+      "label": "Free Add Text",
+      "default": "Ab 5 Düften erhältst Du unser Pure-Alpha Duschgel Gratis"
+    },
+    {
+      "type": "image_picker",
+      "id": "free_add_image",
+      "label": "Free Add Image"
+    },
+    {
+      "type": "header",
+      "content": "Influencer Section"
+    },
+    {
+      "type": "image_picker",
+      "id": "influencer_image_desktop",
+      "label": "Influencer Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "influencer_image_mobile",
+      "label": "Influencer Image (Mobile)"
+    },
+    {
+      "type": "textarea",
+      "id": "influencer_quote",
+      "label": "Influencer Quote",
+      "default": "Die Parfümöle von Sultan of Style sind absolute Game-Changer! Langanhaltend, kraftvoll und perfekt für Männer, die sich abheben wollen. Egal, ob für den Alltag oder besondere Anlässe – diese Düfte bieten pure Exklusivität und hinterlassen einen bleibenden Eindruck. Sultan of Style bringt Luxus auf ein neues Level."
+    },
+    {
+      "type": "text",
+      "id": "influencer_name",
+      "label": "Influencer Name",
+      "default": "Jeremy Fragrance - Influencer"
+    }
+  ],
+  "presets": [{
+    "name": "Product Bundle"
+  }]
+}
+{% endschema %}

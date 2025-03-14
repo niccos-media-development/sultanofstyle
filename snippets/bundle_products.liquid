@@ -1,0 +1,1005 @@
+{% assign bundle_price = product.metafields.custom.bundle_price %}
+{%- if product.variants.size > 1 -%}
+  <div class="bundle_list">
+    <div
+      class="bundle-price-summary bundle-radio-container"
+      onclick="toggleBundleContent(this)"
+    >
+      <div class="custom_optioncheck">
+        <input
+          type="radio"
+          id="bundle-option-1"
+          name="bundle-option"
+          value="{{ product.selected_or_first_available_variant.id }}"
+          total_price="{{ product.selected_or_first_available_variant.price | money }}"
+        >
+        <label for="bundle-option-1">1 Parfüm</label>
+      </div>
+      <div style="text-align: right;">
+        <p class="bundle-price variant-price">
+          {{ product.selected_or_first_available_variant.price | money }}
+        </p>
+      </div>
+    </div>
+    <div class="bundle-content" style="display: none;">
+      {% if product.variants.size > 1 %}
+        <div class="single-product-variants">
+          <div class="variant-grid">
+            {% for variant in product.variants %}
+              <div>
+                <div
+                  class="variant-option {% if variant.id == product.selected_or_first_available_variant.id %}active{% endif %}"
+                  data-variant-id="{{ variant.id }}"
+                  data-variant-price="{{ variant.price | money }}"
+                  data-variant-url="{{ variant.url }}"
+                  onclick="selectVariant(this)"
+                >
+                  {% if variant.featured_image %}
+                    <img
+                      src="{{ variant.featured_image | img_url: 'master' }}"
+                      alt="{{ variant.title }}"
+                    >
+                  {% endif %}
+                </div>
+                <div class="variant-details">
+                  <span class="variant-title">{{ variant.title }}</span>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="bundle_list">
+    <div
+      class="bundle-price-summary bundle-radio-container"
+      onclick="toggleBundleContent(this)"
+    >
+      {% assign total_price = bundle_price %}
+      {% assign varaints_id = product.selected_or_first_available_variant.id %}
+      {% assign total_compare_price = 0 %}
+      {% assign bundle_count = 3 %}
+
+      {% assign first_variant = product.selected_or_first_available_variant %}
+      {% if first_variant %}
+        {% assign total_price = first_variant.price | times: 2 %}
+        {% assign total_compare_price = first_variant.price
+          | times: bundle_count
+        %}
+
+        {% comment %}
+          {% if first_variant.compare_at_price != blank %}
+            {% assign total_compare_price = first_variant.compare_at_price
+              | times: bundle_count
+            %}
+          {% else %}
+            {% assign total_compare_price = variant_price | times: bundle_count %}
+          {% endif %}
+        {% endcomment %}
+      {% endif %}
+
+      <div class="custom_optioncheck">
+        <input
+          type="radio"
+          id="bundle-option-2"
+          name="bundle-option"
+          value="{{ varaints_id }}"
+          total_price="{{ total_price | money }}"
+          checked
+        >
+        <label for="bundle-option-2">
+          Limitertes Spar-Bundle
+          <div class="cust_labels">
+            <span>2+1 Gratis Aktion</span>
+            <span>Beliebteste Wahl</span>
+          </div>
+        </label>
+      </div>
+      <div style="text-align: right;">
+        <p class="bundle-price product-bundle-price">
+          {{ total_price | money }}
+        </p>
+        {% if total_compare_price > total_price %}
+          <p class="bundle-compare-price">
+            {{ total_compare_price | money }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="bundle-content" style="display: none;">
+      <label class="selection-label">Wähle 3 Düfte aus:</label>
+      <div class="bundle-products">
+        {% for variant in product.variants %}
+          <div
+            class="bundled-product"
+            variant-id="{{ variant.id }}"
+            {% if variant.inventory_management == 'shopify'
+              and variant.inventory_policy != 'continue'
+              and variant.inventory_quantity <= 0
+            %}
+              data-available="false"
+            {% else %}
+              data-available="true"
+            {% endif %}
+          >
+            {% if variant.featured_image %}
+              <img
+                src="{{ variant.featured_image | img_url: 'master' }}"
+                alt="{{ variant.title }}"
+                class="variant-image"
+              >
+            {% endif %}
+            <div class="quantity-controls">
+              <button
+                class="quantity-btn minus"
+                {% if variant.inventory_management == 'shopify'
+                  and variant.inventory_policy != 'continue'
+                  and variant.inventory_quantity <= 0
+                %}
+                  disabled
+                {% endif %}
+              >
+                <svg
+                  width="17"
+                  height="17"
+                  viewBox="0 0 17 17"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M16 8.5C16 12.6421 12.6421 16 8.5 16C4.35786 16 1 12.6421 1 8.5C1 4.35786 4.35786 1 8.5 1C12.6421 1 16 4.35786 16 8.5Z" fill="black"/>
+                  <path d="M5.6875 8.5H11.3125M16 8.5C16 12.6421 12.6421 16 8.5 16C4.35786 16 1 12.6421 1 8.5C1 4.35786 4.35786 1 8.5 1C12.6421 1 16 4.35786 16 8.5Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <input
+                type="number"
+                class="quantity-input"
+                value="1"
+                min="0"
+                max="3"
+                readonly
+              >
+              <button class="quantity-btn plus">
+                <svg
+                  width="17"
+                  height="17"
+                  viewBox="0 0 17 17"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M16 8.5C16 12.6421 12.6421 16 8.5 16C4.35786 16 1 12.6421 1 8.5C1 4.35786 4.35786 1 8.5 1C12.6421 1 16 4.35786 16 8.5Z" fill="black"/>
+                  <path d="M11.3125 8.49954H8.5M8.5 8.49954H5.6875M8.5 8.49954V11.312M8.5 8.49954L8.5 5.68704M16 8.5C16 12.6421 12.6421 16 8.5 16C4.35786 16 1 12.6421 1 8.5C1 4.35786 4.35786 1 8.5 1C12.6421 1 16 4.35786 16 8.5Z" stroke="white" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+            <div class="variant-title">{{ variant.title }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+<style>
+  /* Bundle Price Summary Styling */
+
+  .bundle_list {
+    padding: 20px;
+    margin-bottom: 10px;
+
+    background: var(--Hell-Braun, #faf9f7);
+    box-shadow: 0px 1px 5px 0px rgba(113, 113, 113, 0.2);
+  }
+  .bundle_list:has(input[type='radio']:checked) {
+    border: 1px solid #9a9a9a;
+  }
+  .bundle-price-summary h2 {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 0;
+    color: #000;
+  }
+
+  .bundle-price-summary .bundle-price {
+    color: var(--Black, #111);
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%;
+  }
+
+  .bundle-price-summary .bundle-compare-price {
+    color: #8e8e8e;
+    font-family: Lato;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    text-decoration-line: line-through;
+  }
+
+  /* Bundle Products Container Styling */
+  .bundle-products {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+    justify-content: space-between;
+    margin-top: 15px;
+    /* margin-bottom: 40px; */
+  }
+
+  .bundled-product {
+    width: 100%;
+    position: relative;
+  }
+
+  .quantity-btn {
+    /* height: 16px;
+    width: 16px; */
+    /* background-color: black; */
+    border-radius: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .quantity-btn span {
+    margin-bottom: 2px;
+  }
+  .quantity-input {
+    border: none !important;
+    font-size: 14px !important;
+  }
+  .bundled-product img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .bundled-product .add-button {
+    position: absolute;
+    bottom: -15px;
+    right: -10px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+  .bundle_list input {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid black;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .bundle_list input:checked::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    background-color: black;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+  }
+
+  /* Info Label Styling */
+  .info-label {
+    background-color: #000;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: normal;
+  }
+
+  /* Radio Button and Labels Styling */
+  .bundle-radio-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .bundle-radio-container input[type='radio'] {
+    margin: 5px 0 auto 0;
+  }
+  .custom_optioncheck {
+    display: flex;
+    gap: 27px;
+    align-items: flex-start;
+  }
+  .bundle-radio-container label {
+    color: var(--Black, #111);
+    font-family: Lato;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+  }
+
+  .cust_labels span {
+    color: var(--White, #fff);
+    font-family: Lato;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    background: var(--Black, #111);
+    display: inline-flex;
+    padding: 4px 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    .bundled-product {
+      width: calc(50% - 20px);
+    }
+    .bundle-radio-container label {
+      font-size: 16px;
+      line-height: 160%;
+    }
+    .custom_optioncheck {
+      gap: 20px;
+    }
+    .bundled-product .add-button {
+      bottom: -5px;
+      right: -5px;
+      width: 20px;
+      height: 20px;
+    }
+    .bundle-products {
+      margin-bottom: 30px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .bundled-product {
+      width: 100%;
+    }
+  }
+
+  .quantity-controls {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    padding: 4px 16px;
+    transform: translateX(-50%);
+    display: none;
+    align-items: center;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .bundle-products {
+    /* margin-top: 36px !important; */
+  }
+  .selection-label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 768px) {
+    .quantity-controls {
+      padding: 4px 6px;
+    }
+    .quantity-btn.plus {
+      margin-bottom: 3px;
+    }
+    .quantity-btn.minus {
+      margin-bottom: 3px;
+    }
+    .quantity-controls input {
+      margin: 0px 6px;
+      font-size: 13px !important;
+      width: 20px;
+      height: 20px;
+    }
+  }
+  .quantity-btn {
+    /* width: 28px;
+    height: 28px;
+    border: none;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: bold; */
+  }
+
+  .quantity-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .buy-buttons button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  .quantity-input {
+    width: 40px;
+    height: 28px;
+    text-align: center;
+    border: none;
+    background: transparent;
+    margin: 0 10px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  /* Remove spinner arrows from number input */
+  .quantity-input::-webkit-inner-spin-button,
+  .quantity-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .quantity-input[type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  .bundle-radio-container {
+    cursor: pointer;
+  }
+
+  .single-product-variants {
+    margin-top: 15px;
+  }
+  .bundle-content {
+    /* margin-top: 15px; */
+  }
+
+  .single-product-variants {
+    margin-top: 20px;
+  }
+
+  .variant-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+    justify-content: space-between;
+    margin-top: 15px;
+    /* margin-bottom: 40px; */
+  }
+
+  .variant-option {
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+
+  .variant-option img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 0px;
+    border: 1px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+  .variant-option.active img {
+    border-color: #000;
+  }
+
+  .variant-details {
+    margin-top: 0px;
+    text-transform: capitalize;
+    text-align: center;
+  }
+
+  .variant-title {
+    font-size: 14px;
+    color: var(--Black, #111);
+    font-family: Lato;
+    line-height: 160%;
+    margin-top: 8px;
+    display: block;
+    text-align: center;
+    text-transform: capitalize;
+  }
+
+  @media (max-width: 768px) {
+    .variant-grid {
+      gap: 8px;
+    }
+
+    .variant-title {
+      font-size: 14px;
+      margin-top: 4px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .variant-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+</style>
+{%- if product.variants.size > 1 -%}
+<script>
+  function toggleBundleContent(element) {
+    const bundleContent = element.nextElementSibling;
+    const radio = element.querySelector('input[type="radio"]');
+
+    // First hide all bundle contents
+    document.querySelectorAll('.bundle-content').forEach((content) => {
+      content.style.display = 'none';
+    });
+
+    // Check the radio button
+    radio.checked = true;
+
+    // Show the selected bundle content
+    bundleContent.style.display = 'block';
+
+    // If this is bundle option 1, ensure the correct variant is marked as active
+    if (radio.id === 'bundle-option-1') {
+      const activeVariant = bundleContent.querySelector(
+        `[data-variant-id="${radio.value}"]`
+      );
+      if (activeVariant) {
+        document.querySelectorAll('.variant-option').forEach((variant) => {
+          variant.classList.remove('active');
+        });
+        activeVariant.classList.add('active');
+      }
+    }
+
+    // Trigger the radio change event to maintain existing functionality
+    radio.dispatchEvent(new Event('change'));
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // Show content for initially selected radio button
+    const checkedRadio = document.querySelector(
+      'input[name="bundle-option"]:checked'
+    );
+    if (checkedRadio) {
+      const bundleContent = checkedRadio.closest(
+        '.bundle-radio-container'
+      ).nextElementSibling;
+      bundleContent.style.display = 'block';
+    }
+
+    const MAX_TOTAL_QUANTITY = 3;
+    const bundleProducts = document.querySelectorAll('.bundled-product');
+
+    // Initialize quantities and hide controls before anything else
+    document.querySelectorAll('.quantity-controls').forEach((control) => {
+      control.style.display = 'none';
+    });
+    function handleBuyButton() {
+      const buyButton = document.querySelector(
+        '.product-info__block-item buy-buttons.buy-buttons button'
+      );
+      console.log('but button', buyButton);
+      const selectedOption = document.querySelector(
+        "input[name='bundle-option']:checked"
+      );
+      const isBundleOption =
+        selectedOption && selectedOption.id === 'bundle-option-2';
+
+      console.log('isBundleOption', isBundleOption);
+      if (isBundleOption) {
+        let totalQuantity = 0;
+        document.querySelectorAll('.quantity-input').forEach((input) => {
+          totalQuantity += parseInt(input.value);
+        });
+
+        buyButton.disabled = totalQuantity !== MAX_TOTAL_QUANTITY;
+        console.log('totalQuantity', buyButton);
+      } else {
+        buyButton.disabled = false;
+      }
+    }
+
+    function updateQuantityButtons() {
+      let totalQuantity = 0;
+      const selectedOption = document.querySelector(
+        "input[name='bundle-option']:checked"
+      );
+      const isBundleOption =
+        selectedOption && selectedOption.id === 'bundle-option-2';
+
+      document.querySelectorAll('.quantity-input').forEach((input) => {
+        totalQuantity += parseInt(input.value);
+      });
+
+      document.querySelectorAll('.bundled-product').forEach((product) => {
+        const isAvailable = product.dataset.available === 'true';
+        const input = product.querySelector('.quantity-input');
+        const minusBtn = product.querySelector('.quantity-btn.minus');
+        const plusBtn = product.querySelector('.quantity-btn.plus');
+        const quantityControls = product.querySelector('.quantity-controls');
+        const variantImage = product.querySelector('.variant-image');
+
+        if (!isBundleOption || !isAvailable) {
+          quantityControls.style.display = 'none';
+          minusBtn.disabled = true;
+          plusBtn.disabled = true;
+          input.value = 0;
+          if (variantImage) variantImage.style.opacity = '0.5';
+          return;
+        }
+
+        quantityControls.style.display = 'flex';
+        minusBtn.disabled = parseInt(input.value) <= 0;
+        plusBtn.disabled = totalQuantity >= MAX_TOTAL_QUANTITY;
+
+        // Update image opacity based on quantity
+        if (variantImage) {
+          variantImage.style.opacity =
+            parseInt(input.value) === 0 ? '0.5' : '1';
+        }
+
+        handleBuyButton();
+      });
+    }
+
+    function initializeQuantities() {
+      const selectedOption = document.querySelector(
+        "input[name='bundle-option']:checked"
+      );
+      document.querySelectorAll('.quantity-input').forEach((input) => {
+        input.value = 1;
+      });
+      updateQuantityButtons();
+    }
+
+    // Handle bundle option selection
+    document
+      .querySelectorAll("input[name='bundle-option']")
+      .forEach((radio) => {
+        radio.addEventListener('change', function () {
+          const isBundleOption = this.id === 'bundle-option-2';
+          updatePricing();
+          document.querySelectorAll('.bundled-product').forEach((product) => {
+            const quantityControls =
+              product.querySelector('.quantity-controls');
+            const input = product.querySelector('.quantity-input');
+
+            if (isBundleOption) {
+              quantityControls.style.display = 'flex';
+
+              input.value = 1;
+            } else {
+              quantityControls.style.display = 'none';
+              input.value = 1;
+            }
+            handleBuyButton();
+          });
+
+          updateQuantityButtons();
+        });
+      });
+
+    // Add quantity control event listeners
+    bundleProducts.forEach((product) => {
+      const minusBtn = product.querySelector('.quantity-btn.minus');
+      const plusBtn = product.querySelector('.quantity-btn.plus');
+      const input = product.querySelector('.quantity-input');
+
+      plusBtn.addEventListener('click', () => {
+        const currentValue = parseInt(input.value);
+        let totalQuantity = 0;
+
+        document.querySelectorAll('.quantity-input').forEach((inp) => {
+          totalQuantity += parseInt(inp.value);
+        });
+
+        if (totalQuantity < MAX_TOTAL_QUANTITY) {
+          input.value = currentValue + 1;
+          updateQuantityButtons();
+        }
+      });
+
+      minusBtn.addEventListener('click', () => {
+        const currentValue = parseInt(input.value);
+        if (currentValue > 0) {
+          input.value = currentValue - 1;
+          updateQuantityButtons();
+        }
+      });
+    });
+
+    // Update the buy button click handler
+    const buyButton = document.querySelector(
+      '.product-info__block-item buy-buttons.buy-buttons button'
+    );
+    if (buyButton) {
+      buyButton.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const selectedOption = document.querySelector(
+          "input[name='bundle-option']:checked"
+        );
+        if (!selectedOption) return;
+
+        const items = [];
+
+        if (selectedOption.id === 'bundle-option-1') {
+          items.push({
+            id: selectedOption.value,
+            quantity: 1,
+          });
+        } else {
+          document.querySelectorAll('.bundled-product').forEach((product) => {
+            const quantity = parseInt(
+              product.querySelector('.quantity-input').value
+            );
+            if (quantity > 0) {
+              items.push({
+                id: product.getAttribute('variant-id'),
+                quantity: quantity,
+              });
+            }
+          });
+        }
+
+        if (items.length > 0) {
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ items: items }),
+          })
+            .then((response) => response.json())
+            .then((result) => {
+              console.log('Items added to cart:', result);
+              window.location.href = '/cart';
+            })
+            .catch((error) => {
+              console.error('Error adding items to cart:', error);
+            });
+        }
+      });
+    }
+
+    // Initialize with default quantities
+    initializeQuantities();
+
+    // Trigger change event on the default selected radio button
+    const defaultSelected = document.querySelector(
+      "input[name='bundle-option']:checked"
+    );
+    console.log('defaultSelected', defaultSelected);
+
+    if (defaultSelected) {
+      defaultSelected.dispatchEvent(new Event('change'));
+    }
+    updatePricing();
+
+    function updatePricing() {
+      const selected = document.querySelector(
+        "input[name='bundle-option']:checked"
+      );
+
+      if (selected.id == 'bundle-option-1') {
+        const variantPrice = document.querySelector('.variant-price');
+
+        const priceElement = document.querySelector('.selected_price');
+        priceElement.textContent = variantPrice.textContent;
+      } else {
+        const variantPrice = document.querySelector('.product-bundle-price');
+        const priceElement = document.querySelector('.selected_price');
+        priceElement.textContent = variantPrice.textContent;
+      }
+    }
+
+    function updateSelectionLabel() {
+      const selectedOption = document.querySelector(
+        "input[name='bundle-option']:checked"
+      );
+      const isBundleOption =
+        selectedOption && selectedOption.id === 'bundle-option-2';
+      const selectionLabel = document.querySelector('.selection-label');
+
+      if (!isBundleOption) {
+        selectionLabel.textContent = 'Wähle 3 Düfte aus:';
+        return;
+      }
+
+      let totalSelected = 0;
+      document.querySelectorAll('.quantity-input').forEach((input) => {
+        totalSelected += parseInt(input.value);
+      });
+
+      switch (totalSelected) {
+        case 0:
+          selectionLabel.textContent = 'Wähle noch drei Düfte aus';
+          break;
+        case 1:
+          selectionLabel.textContent = 'Wähle noch zwei Düfte aus';
+          break;
+        case 2:
+          selectionLabel.textContent = 'Wähle noch einen Duft aus';
+          break;
+        case 3:
+          selectionLabel.textContent = 'Deine Düfte:';
+          break;
+        default:
+          selectionLabel.textContent = 'Wähle 3 Düfte aus:';
+      }
+    }
+
+    // Add updateSelectionLabel() to existing event listeners
+    bundleProducts.forEach((product) => {
+      const minusBtn = product.querySelector('.quantity-btn.minus');
+      const plusBtn = product.querySelector('.quantity-btn.plus');
+      const input = product.querySelector('.quantity-input');
+
+      plusBtn.addEventListener('click', () => {
+        // ... existing plus button code ...
+        updateSelectionLabel();
+      });
+
+      minusBtn.addEventListener('click', () => {
+        // ... existing minus button code ...
+        updateSelectionLabel();
+      });
+    });
+
+    // Update radio button change handler
+    document
+      .querySelectorAll("input[name='bundle-option']")
+      .forEach((radio) => {
+        radio.addEventListener('change', function () {
+          // ... existing radio change code ...
+          updateSelectionLabel();
+        });
+      });
+
+    // Call updateSelectionLabel during initialization
+    initializeQuantities();
+    updateSelectionLabel();
+  });
+
+  function selectVariant(element) {
+    // Remove active class from all variants
+    document.querySelectorAll('.variant-option').forEach((variant) => {
+      variant.classList.remove('active');
+    });
+
+    // Add active class to selected variant
+    element.classList.add('active');
+
+    // Update the radio button value and price
+    const variantId = element.dataset.variantId;
+    const variantPrice = element.dataset.variantPrice;
+    const variantUrl = element.dataset.variantUrl;
+    const radio = document.getElementById('bundle-option-1');
+
+    radio.value = variantId;
+    radio.setAttribute('total_price', variantPrice);
+
+    // Update displayed price
+    const priceElement = element
+      .closest('.bundle_list')
+      .querySelector('.bundle-price');
+    priceElement.textContent = variantPrice;
+
+    // Update URL with new variant ID
+    if (variantId) {
+      try {
+        // Try to update URL using the variant's full URL if available
+        if (variantUrl) {
+          window.history.replaceState({ path: variantUrl }, '', variantUrl);
+        } else {
+          // Fallback to just updating the variant parameter
+          const newUrl = new URL(window.location.href);
+          newUrl.searchParams.set('variant', variantId);
+          window.history.replaceState(
+            { path: newUrl.toString() },
+            '',
+            newUrl.toString()
+          );
+        }
+
+        // Dispatch a custom event to notify other components
+        const event = new CustomEvent('variant:changed', {
+          detail: {
+            variantId: variantId,
+            price: variantPrice,
+            variant: {
+              featured_media: element
+                .closest('.variant-option')
+                .querySelector('img')?.src,
+            },
+          },
+        });
+        document.dispatchEvent(event);
+      } catch (e) {
+        console.error('Error updating URL:', e);
+      }
+    }
+  }
+
+  // Add event listener to handle initial URL state
+  document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const variantId = urlParams.get('variant');
+
+    if (variantId) {
+      const variantElement = document.querySelector(
+        `.variant-option[data-variant-id="${variantId}"]`
+      );
+      if (variantElement) {
+        selectVariant(variantElement);
+      }
+    }
+  });
+
+  // Add this new function to handle media updates
+  function updateProductGallery(variantMedia) {
+    if (!variantMedia) return;
+
+    const productGallery = document.querySelector('product-gallery');
+    if (!productGallery) return;
+
+    const mediaItems = productGallery.querySelectorAll(
+      '.product-gallery__media'
+    );
+    const thumbnails = productGallery.querySelectorAll(
+      '.product-gallery__thumbnail'
+    );
+
+    const targetMedia = Array.from(mediaItems).find((media) => {
+      const mediaImg = media.querySelector('img');
+      return mediaImg && mediaImg.src.includes(variantMedia);
+    });
+
+    if (targetMedia) {
+      // Remove is-initial class from all media items
+      mediaItems.forEach((media) => media.classList.remove('is-initial'));
+
+      // Add is-initial class to the target media
+      targetMedia.classList.add('is-initial');
+
+      // Update thumbnails
+      thumbnails.forEach((thumbnail) => {
+        thumbnail.setAttribute('aria-current', 'false');
+        if (thumbnail.querySelector('img')?.src.includes(variantMedia)) {
+          thumbnail.setAttribute('aria-current', 'true');
+        }
+      });
+
+      // Handle horizontal scroll only
+      const carousel = productGallery.querySelector('scroll-carousel');
+      if (carousel) {
+        const scrollLeft =
+          targetMedia.offsetLeft -
+          (carousel.offsetWidth - targetMedia.offsetWidth) / 2;
+        carousel.scrollTo({
+          left: scrollLeft,
+          behavior: 'instant',
+        });
+      }
+    }
+  }
+
+  // Add event listener for variant changes
+  document.addEventListener('variant:changed', function (event) {
+    if (event.detail.variant?.featured_media) {
+      updateProductGallery(event.detail.variant.featured_media);
+    }
+  });
+</script>
+{% endif %}

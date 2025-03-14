@@ -1,0 +1,14 @@
+{% if product.metafields.custom.influencer_message != blank or product.metafields.custom.influencer_name != blank or product.metafields.custom.influencer_image != blank %}
+<div class="influencer_section">
+  <img class="doc_img desk_img" src="{{ product.metafields.custom.influencer_image | img_url: 'master' }}">
+  <img class="doc_img mob_img" src="{{ product.metafields.custom.influencer_mobile_image | img_url: 'master' }}">
+  <div class="influencer_content prose">
+    {% if product.metafields.custom.influencer_message != blank %}
+      <p>{{ product.metafields.custom.influencer_message }}</p>
+    {% endif %}
+    {% if product.metafields.custom.influencer_name != blank %}
+    <label>{{ product.metafields.custom.influencer_name }}</label>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
